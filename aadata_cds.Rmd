@@ -1,0 +1,55 @@
+---
+title: "agrodata"
+author: "Matthew"
+date: "April 7, 2020"
+output: pdf_document
+---
+
+```{r load_package}
+library(tidyverse)
+```
+
+```{r load_data}
+aadata <- read.csv("aadata.csv", header = TRUE)
+aadata_2 <- separate(aadata, "DOB", into = c("day", "month"))
+View(aadata_2)
+str(aadata_2)
+```
+
+```{r bday, echo = FALSE}
+(bday <- ggplot(data = aadata_2) + geom_bar(mapping = aes(x = month, fill = month)))
+(bday <- ggplot(data = aadata_2) + geom_bar(mapping = aes(x = month, fill = day)))
+(bday <- ggplot(data = aadata_2) + 
+    geom_bar(
+      mapping = aes(x = month, fill = month),
+             show.legend = FALSE,
+             width = 1
+      ) +
+    theme(aspect.ratio = 1) +
+    labs(x = NULL, y = NULL))
+
+(bday_sex <- ggplot(data = aadata_2) + 
+    geom_bar(
+      mapping = aes(x = month, fill = Gender)
+      ))
+
+(bday + coord_flip())
+(bday + coord_polar())
+
+(batch_stream <- ggplot(data = aadata_2) + 
+    geom_bar(
+      mapping = aes(x = batch, fill = as.factor(stream))
+      ))
+
+(batch_stream + coord_flip())
+(batch_stream + coord_polar())
+```
+
+
+```{r SG}
+(SG <- ggplot(data = aadata_2) + geom_bar(mapping = aes(x = SG, fill = SG)))
+(SG <- ggplot(data = aadata_2) + geom_bar(mapping = aes(x = SG, fill = Gender)))
+(SG <- ggplot(data = aadata_2) + geom_bar(mapping = aes(x = SG, fill = batch)))
+```
+
+                                           
